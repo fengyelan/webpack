@@ -1,0 +1,172 @@
+html, body {
+  /*height: 100%;*/
+  -webkit-overflow-scrolling: touch;
+  overflow-scrolling: touch;
+  margin: 0;
+}
+
+html{
+  @media screen and (min-width:67px){
+    font-size:15.703125%;
+  }
+  @media screen and (min-width:91px){
+    font-size:21.328125%;
+  }
+  @media screen and (min-width:100px){
+    font-size:23.4375%;
+  }
+  @media screen and (min-width:200px){
+    font-size:46.875%;
+  }
+  @media screen and (min-width:250px){
+    font-size:58.59375%;
+  }
+  @media screen and (min-width:256px){
+    font-size:60%;
+  }
+  @media screen and (min-width:260px){
+    font-size:60.9375%;
+  }
+  @media screen and (min-width:270px){
+    font-size:63.28125%;
+  }
+  @media screen and (min-width:280px){
+    font-size:65.635%;
+  }
+  @media screen and (min-width:300px){
+    font-size:70.3125%;
+  }
+  @media screen and (min-width:320px){
+    font-size:75%;
+  }
+  @media screen and (min-width:360px){
+    font-size:84.375%;
+  }
+
+  @media screen and (min-width:375px){
+    font-size:87.890625%;
+  }
+
+  @media screen and (min-width:414px){
+    font-size:97.03125%;
+  }
+
+  @media screen and (min-width:480px){
+    font-size:112.5%;
+  }
+
+  @media screen and (min-width:540px){
+    font-size:126.56%;
+  }
+
+  @media screen and (min-width:640px){
+    font-size:150%;
+  }
+
+  @media screen and (min-width:720px){
+    font-size:168.75%;
+  }
+
+  @media screen and (min-width:770px){
+    font-size:180.46875%;
+  }
+
+  @media screen and (min-width:960px){
+    font-size:225%;
+  }
+
+  @media screen and (min-width:1024px){
+    font-size:240%;
+  }
+
+  @media screen and (min-width:1080px){
+    font-size:253.125%;
+  }
+}
+
+
+html,body,div,ul,li,p,span,h1,h2,h3,img,article,aside,details,figcaption,figure,footer,header,main,nav,section,summary{
+  @include __trip-padding-margin;
+  border:0;
+  outline:none;
+}
+a,a:active,a:hover,a:visited{
+  text-decoration: none;
+  display: block;
+  -webkit-touch-callout: none; /* 禁止长按链接与图片弹出菜单 */
+  text-decoration:none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: transparent; /* For some Androids */
+  -webkit-focus-ring-color: rgba(255, 255, 255, 0) !important;
+}
+
+ul {
+  list-style-type: none;
+}
+
+//去除ios下以下标签点击高亮样式
+
+label,input,textarea,button,a{
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.clear::after {
+  display: block;
+  content: '';
+  clear: both;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.p_absolute {
+  position: absolute;
+}
+
+.p_relative {
+  position: relative;
+}
+
+.p_fixed {
+  position: fixed;
+}
+
+.center_y {
+  transform: translate3d(0, -50%, 0);
+  -webkit-transform: translate3d(0, -50%, 0);
+}
+
+.center_x {
+  transform: translate3d(-50%, 0, 0);
+  -webkit-transform: translate3d(-50%, 0, 0);
+}
+
+.center {
+  transform: translate3d(-50%, -50%, 0);
+  -webkit-transform: translate3d(-50%, -50%, 0);
+}
+
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.text-left{
+  text-align: left;
+}
+.text-center{
+  text-align: center;
+}
+.text-right{
+  text-align: right;
+}
+
+.text-hidden{
+  height: 0;
+  text-indent: -999em;
+}

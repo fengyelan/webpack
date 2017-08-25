@@ -1,0 +1,255 @@
+/*
+* @Functions
+* @description Strip units from $number(去掉数值后的单位)
+* @param $number Include units number(含单位字符的数值)
+* @return pure number(纯数字)
+*/
+@function __strip-units($number){
+  @if type-of($number) == 'number'{
+    @return $number/($number*0 +1);
+  }
+  @warn 'Exception in method __stip-unit : Not a number value: #{$number}';
+  @return $number;
+}
+
+
+/*
+* @Functions
+* @description Convert the ratio to percentage between real length and max length (得到实际长度和最大长度的百分比)
+* @param $tinyLen 设计图上的实际尺寸
+* @param $maxLen  设计图上的容器最大尺寸
+* @return percent(百分比)
+*/
+@function __percent($realLen,$maxLen){
+  $realLen : __strip-units($realLen);
+  $maxLen : __strip-units($maxLen);
+  @return #{($realLen / $maxLen)*100+'%'};
+}
+
+/*
+* @Functions
+* @description Convert the px to rem (将实际的设计尺寸px转为相对的rem)
+* @param $origLen 设计图上的实际尺寸
+* @return rem
+*/
+@function __rem($origLen){
+  $origLen : __strip-units($origLen);
+  @return #{$origLen/40.5}rem;
+}
+
+/*
+*@Mixin
+*/
+@mixin __trip-padding-margin{
+  padding:0;
+  margin:0;
+}
+
+@mixin __full-width-height{
+  width:100%;
+  height:100%;
+}
+
+@mixin g-word-break{
+  word-break:break-all;
+  word-wrap:break-word;
+}
+/*
+* @Functions
+* @$num 边框宽度 rem px都可以
+* @$color 边框颜色
+* @$angle 角度 (单位)rem
+* @$direction :边框放心 around为四周
+*/
+@mixin __border-line ($num,$color,$angle,$direction){
+  position: relative;
+  z-index: 1;
+  &:after {
+    @if $direction == left {
+      border-left:$num solid $color;
+    } @else if $direction == right {
+      border-right:$num solid $color;
+    } @else if $direction == top {
+      border-top:$num solid $color;
+    } @else if $direction == bottom {
+      border-bottom:$num solid $color;
+    } @else {
+      border:$num solid $color;
+    }
+    @if $angle{
+      border-radius: $angle;
+      -webkit-border-radius: $angle;
+    }
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    z-index: -1;
+    box-sizing: border-box;
+  }
+  @media (-webkit-min-device-pixel-ratio:2) {
+    &:after {
+      width: 199%;
+      height: 200%;
+      -webkit-transform: scale(0.5);
+      transform: scale(0.5);
+      -webkit-transform-origin:0 0;
+      transform-origin:0 0;
+      box-sizing: border-box;
+    }
+  }
+}
+
+/*
+* @Functions
+* @$num 边框宽度 rem px都可以 use before
+* @$color 边框颜色
+* @$angle 角度 (单位)rem
+* @$direction :边框放心 around为四周
+*/
+@mixin __border-line_before ($num,$color,$angle,$direction){
+  position: relative;
+  z-index: 1;
+  &:before{
+    @if $direction == left {
+      border-left:$num solid $color;
+    } @else if $direction == right {
+      border-right:$num solid $color;
+    } @else if $direction == top {
+      border-top:$num solid $color;
+    } @else if $direction == bottom {
+      border-bottom:$num solid $color;
+    } @else {
+      border:$num solid $color;
+    }
+    @if $angle{
+      border-radius: $angle;
+      -webkit-border-radius: $angle;
+    }
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    z-index: -1;
+    box-sizing: border-box;
+  }
+  @media (-webkit-min-device-pixel-ratio:2) {
+    &:before{
+      width: 199%;
+      height: 200%;
+      -webkit-transform: scale(0.5);
+      transform: scale(0.5);
+      -webkit-transform-origin:0 0;
+      transform-origin:0 0;
+      box-sizing: border-box;
+    }
+  }
+}
+
+
+/*
+* @Functions
+* @$num 边框宽度 rem px都可以 use before 一个边框
+* @$color 边框颜色
+* @$angle 角度 (单位)rem
+* @$direction :边框
+*/
+@mixin __border-line_before-one ($num,$color,$angle,$direction){
+  position: relative;
+  &:before{
+    @if $direction == left {
+      width: $num;
+      height: 100%;
+      background:$color;
+      left:0;
+      top:0;
+    } @else if $direction == right {
+      width: $num;
+      height: 100%;
+      background:$color;
+      top:0;
+      right:0;
+    } @else if $direction == top {
+      height: $num;
+      width: 100%;
+      background:$color;
+      top:0;
+      left:0;
+    } @else if $direction == bottom {
+      height: $num;
+      width: 100%;
+      background:$color;
+      left:0;
+      bottom:0;
+    } @else {
+      height: $num;
+      width: 100%;
+      background:$color;
+      left:0;
+      bottom:0;
+    }
+    @if $angle{
+    }
+    position: absolute;
+    content: '';
+    box-sizing: border-box;
+    display:block;
+  }
+  @media (-webkit-min-device-pixel-ratio:2) {
+    &:before{
+      -webkit-transform-origin:0 0;
+      transform-origin:0 0;
+      @if $direction == left {
+        -webkit-transform:translate3d(0,0,0) scaleX(0.5);
+        transform:translate3d(0,0,0)  scaleX(0.5);
+      } @else if $direction == right {
+        -webkit-transform:translate3d(0,0,0)  scaleX(0.5);
+        transform:translate3d(0,0,0)  scaleX(0.5);
+      } @else if $direction == top {
+        -webkit-transform:translate3d(0,0,0)  scaleY(0.5);
+        transform:translate3d(0,0,0)  scaleY(0.5);
+      } @else if $direction == bottom {
+        -webkit-transform:translate3d(0,0,0)  scaleY(0.5);
+        transform:translate3d(0,0,0)  scaleY(0.5);
+      } @else {
+        -webkit-transform:translate3d(0,0,0)  scaleY(0.5);
+        transform:translate3d(0,0,0)  scaleY(0.5);
+
+      }
+    }
+  }
+}
+
+/*
+* @Functions
+* @description Convert the px to rem (将实际的设计尺寸px转为相对的rem)
+* @param $origLen 设计图上的实际尺寸,
+* @param $hwidth 半屏容器的宽度,
+* @return rem
+*/
+@function __hrem($origLen,$hwidth){
+  $origLen : __strip-units($origLen);
+  @return #{(1080/$hwidth)*$origLen/40.5}rem;
+}
+
+
+/*
+* @Functions
+* @$width 元素宽度
+* @$padding padding值
+* @$url-name :图片链接
+* @$size: 图片尺寸
+*/
+
+@mixin bgImg($width,$padding,$parentWidth,$url-name,$size,$position){
+  width:__percent($width,$parentWidth);
+  padding-top:__percent($padding,$parentWidth);
+  background:url($url-name) no-repeat $position;
+  background-size: 100% $size;
+
+  
+}

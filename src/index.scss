@@ -1,17 +1,21 @@
-.app{
-	font-size:50px;
-	color:red;
+@import "./common/sass/base.scss";
+@import "./common/sass/common.scss";
+html, body {
+  margin: 0;
+  background:#ff8292;
+  font-family: PingFang,miui, PingHei,San Francisco, MILanTing, '小米兰亭', '微软雅黑', DeliciousRoman, sans-serif;
+  width:100%;
+  overflow-x: hidden;
+}
+::-webkit-scrollbar {
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
 
-.img{
-	width:66px;
-	height:36px;
-	background: url(./img/group_card_list_icon_lv8.png) center center no-repeat;
-	background-size: 100% 100%;
-}
-
-.out{
-	h1{
-		color:orange;
-	}
+.banner{
+	width:100%;
+	padding-top:__percent(760,1080);
+	background:url(./img/banner.png) center center no-repeat;
+	background-size:100% 100%;
 }
