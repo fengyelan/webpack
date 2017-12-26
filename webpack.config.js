@@ -1,7 +1,15 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 const path = require("path");
+
 const webpack = require("webpack");
+
+//将样式表抽离成专门的单独文件
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+
+//webpack3.0.0之下不用单独引用，这么使用就可以new webpack.optimize.UglifyJsPlugin()
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin'); //压缩插件
+
 
 //获取主机地址
 var os = require('os');
@@ -23,6 +31,8 @@ function getLocalIps(flagIpv6) {
     }
     return ips;
 };
+console.log(process.env.NODE_ENV);
+console.log(process.env.Module);
 
 
 module.exports = {
@@ -37,9 +47,33 @@ module.exports = {
         path: path.resolve(__dirname, 'dist')
     },
     plugins: [
-        // //这个使用uglifyJs压缩你的js代码
-        // 搞不懂这句总是报错ERROR in app.js from UglifyJsUnexpected token: punc (() [app.js:9,8]
-        //new webpack.optimize.UglifyJsPlugin({ minimize: true }),
+
+        //webpack3.0.0之下这么引用new webpack.optimize.UglifyJsPlugin()
+        new UglifyJsPlugin({
+            uglifyOptions: {
+                warnings: false,
+                parse: {
+                    // parse options
+                    
+                },
+                output: {
+                    // // 最紧凑的输出
+                    beautify: false,
+                    // // 删除所有的注释
+                    comments: false,
+                },
+                compress: {
+
+                    // 删除所有的 `console` 语句
+                    // 还可以兼容ie浏览器
+                    drop_console: true,
+                    // 内嵌定义了但是只用到一次的变量
+                    collapse_vars: true,
+                    // 提取出出现多次但是没有定义成变量去引用的静态值
+                    reduce_vars: true
+                }
+            }
+        }),
 
         //为组件分配ID，通过这个插件webpack可以分析和优先考虑使用最多的模块，并为它们分配最小的ID
         new webpack.optimize.OccurrenceOrderPlugin(),
@@ -94,7 +128,7 @@ module.exports = {
         //inline:true,
         historyApiFallback: true, //当设置为true时，访问所有服务器上不存在的文件，都会被重定向到/，也就是index.html文件,任意的 404 响应都可能需要被替代为 index.htm
         port: 9900, //自定义的端口，默认是8080
-        host: '0.0.0.0', //服务器外部可访问,修改host的地址‘0.0.0.0’, 默认是localhost
+        host: getLocalIps()[0], //服务器外部可访问,修改host的地址‘0.0.0.0’, 默认是localhost
         hot: true // 告诉 dev-server 我们在使用 HMR
     },
     module: {
